@@ -7,7 +7,7 @@ body {
   text-align: center;
 }
 
-/* ====== HEADER ====== */
+/* ====== HEADER (Sticky y Sombras mejoradas) ====== */
 header {
   background: linear-gradient(90deg, #ff9966, #ff7b52);
   padding: 12px 0 18px;
@@ -50,7 +50,7 @@ nav button:hover {
   transform: translateY(-2px);
 }
 
-/* ====== INICIO ====== */
+/* ====== INICIO (Legibilidad mejorada) ====== */
 #inicio {
   background: url("imagenes/perro.avifs") center/cover no-repeat fixed;
   position: relative;
@@ -60,7 +60,6 @@ nav button:hover {
   justify-content: center;
   align-items: center;
   padding: 40px;
-  font-family: 'Poppins', sans-serif;
 }
 
 .inicio-container {
@@ -94,6 +93,7 @@ nav button:hover {
   font-size: 2.3rem;
   margin-bottom: 10px;
   color: #ff7143;
+  text-shadow: none;
 }
 
 .nombre-app {
@@ -115,8 +115,10 @@ nav button:hover {
   gap: 15px;
 }
 
-/* Botón */
-.accion button {
+/* ====== BOTONES (Estilo unificado) ====== */
+.accion button,
+#detalle button,
+.btn-detalle {
   background: #ff7143;
   border: 2px solid #ff7143;
   color: white;
@@ -129,8 +131,10 @@ nav button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.accion button:hover {
-  transform: scale(1.08);
+.accion button:hover,
+#detalle button:hover,
+.btn-detalle:hover {
+  transform: scale(1.05);
   background-color: #ff8f66;
   border-color: #ff8f66;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
@@ -140,11 +144,11 @@ nav button:hover {
 .gif-perrito {
   width: 140px;
   height: auto;
-  transform: scaleX(-1); /* Mirando hacia el botón */
+  transform: scaleX(-1);
   animation: floatingDog 3s infinite ease-in-out;
 }
 
-/* Animaciones */
+/* ANIMACIONES */
 @keyframes floatingDog {
   0% { transform: scaleX(-1) translateY(0); }
   50% { transform: scaleX(-1) translateY(-8px); }
@@ -156,7 +160,7 @@ nav button:hover {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ====== LISTADO ====== */
+/* ====== LISTADO Y COLECCIÓN (Grid unificado) ====== */
 #listado {
   padding: 40px 20px;
 }
@@ -167,7 +171,8 @@ nav button:hover {
   margin-bottom: 25px;
 }
 
-#listado-perros {
+#listado-perros,
+#contenedor-favoritos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
@@ -195,21 +200,6 @@ nav button:hover {
   object-fit: cover;
   border-radius: 15px;
   margin-bottom: 10px;
-}
-
-.btn-detalle {
-  background-color: #ff7143;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 14px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.btn-detalle:hover {
-  background-color: #ff8f66;
 }
 
 /* ====== DETALLE ====== */
@@ -240,19 +230,74 @@ nav button:hover {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-#detalle button {
+.botones-detalle {
+  display: flex;
+  gap: 15px;
   margin-top: 25px;
-  background-color: #ff7143;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
 }
 
-#detalle button:hover {
-  background-color: #ff8f66;
-  transform: scale(1.05);
+/* ====== COLECCIÓN (Vista con botones de Quitar) ====== */
+#coleccion {
+  padding: 40px 20px;
+  background: #fffaf6;
+}
+
+#coleccion h2 {
+  color: #ff7143;
+  font-size: 26px;
+  margin-bottom: 25px;
+}
+
+.card-imagen-contenedor {
+  width: 100%;
+  height: 220px; 
+  overflow: hidden;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+
+.card-imagen-contenedor img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-acciones {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.btn-quitar {
+  background-color: #f44336;
+  border: 2px solid #f44336;
+  color: white;
+  padding: 8px 14px;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-quitar:hover {
+  background-color: #d32f2f;
+  border-color: #d32f2f;
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#coleccion button[onclick="limpiarColeccion()"] {
+  margin-top: 30px;
+  padding: 10px 25px;
+  background-color: #3b3b3b;
+  border-color: #3b3b3b;
+}
+
+#coleccion button[onclick="limpiarColeccion()"]:hover {
+  background-color: #555555;
+  border-color: #555555;
 }

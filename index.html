@@ -12,32 +12,30 @@
     <nav>
       <button onclick="mostrarVista('inicio')">Inicio</button>
       <button onclick="mostrarVista('listado')">Listado</button>
-      <button onclick="mostrarVista('detalle')">Detalle</button>
+      <button onclick="mostrarVista('coleccion'); mostrarColeccion();">Mi Colección</button>
     </nav>
   </header>
 
   <!-- ========== INICIO ========== -->
-<section id="inicio">
-  <div class="inicio-container">
-    <div class="bienvenida">
-      <div class="recuadro-texto">
-        <h2>🐾 ¡Bienvenido a <span class="nombre-app">Dog App</span>! 🐶</h2>
-        <p>
-          Explora adorables perritos, mira sus detalles, y recibe consejos sabios llenos de amor y ternura 🧡
-        </p>
-      </div>
+  <section id="inicio">
+    <div class="inicio-container">
+      <div class="bienvenida">
+        <div class="recuadro-texto">
+          <h2>🐾 ¡Bienvenido a <span class="nombre-app">Dog App</span>! 🐶</h2>
+          <p>
+            Explora adorables perritos, mira sus detalles y guarda tus favoritos en tu colección 🧡
+          </p>
+        </div>
 
-      <div class="accion">
-        <img class="gif-perrito"
-          src="https://i.pinimg.com/originals/d2/99/40/d2994005233783287041f6b90980546b.gif"
-          alt="Perrito animado" />
-        <button onclick="mostrarListado()">Ver perros</button>
+        <div class="accion">
+          <img class="gif-perrito"
+            src="https://i.pinimg.com/originals/d2/99/40/d2994005233783287041f6b90980546b.gif"
+            alt="Perrito animado" />
+          <button onclick="mostrarListado()">Ver perros</button>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
-
+  </section>
 
   <!-- ========== LISTADO ========== -->
   <section id="listado" style="display:none;">
@@ -52,6 +50,13 @@
       <div id="detalle-perro"></div>
     </div>
     <button onclick="mostrarVista('listado')">⬅️ Volver al listado</button>
+  </section>
+
+  <!-- ========== COLECCIÓN ========== -->
+  <section id="coleccion" style="display:none;">
+    <h2>🐾 Mi Colección de Perritos 🧡</h2>
+    <div id="contenedor-favoritos" class="grid"></div>
+    <button onclick="limpiarColeccion()">🗑️ Vaciar colección</button>
   </section>
 
   <script src="app.js"></script>
