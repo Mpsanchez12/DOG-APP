@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dog App 🐾</title>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+  <header>
+    <h1>🐾 Dog App 🐾</h1>
+    <nav>
+      <button onclick="mostrarVista('inicio')">Inicio</button>
+      <button onclick="mostrarVista('listado')">Listado</button>
+      <button onclick="mostrarVista('detalle')">Detalle</button>
+    </nav>
+  </header>
+
+  <!-- ========== INICIO ========== -->
+<section id="inicio">
+  <div class="inicio-container">
+    <div class="bienvenida">
+      <div class="recuadro-texto">
+        <h2>🐾 ¡Bienvenido a <span class="nombre-app">Dog App</span>! 🐶</h2>
+        <p>
+          Explora adorables perritos, mira sus detalles, y recibe consejos sabios llenos de amor y ternura 🧡
+        </p>
+      </div>
+
+      <div class="accion">
+        <img class="gif-perrito"
+          src="https://i.pinimg.com/originals/d2/99/40/d2994005233783287041f6b90980546b.gif"
+          alt="Perrito animado" />
+        <button onclick="mostrarListado()">Ver perros</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- ========== LISTADO ========== -->
+  <section id="listado" style="display:none;">
+    <h2>🐶 Nuestros perritos 🐶</h2>
+    <div id="listado-perros" class="grid"></div>
+  </section>
+
+  <!-- ========== DETALLE ========== -->
+  <section id="detalle" style="display:none;">
+    <div class="texto-con-fondo">
+      <h2>💖 Detalle del perrito 💖</h2>
+      <div id="detalle-perro"></div>
+    </div>
+    <button onclick="mostrarVista('listado')">⬅️ Volver al listado</button>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>

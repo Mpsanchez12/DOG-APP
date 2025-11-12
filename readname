@@ -1,0 +1,16 @@
+# Dog App
+
+## Integrantes
+- Integrante 1 Sanchez Maria Del Pilar
+- Integrante 2 Sanchez Maria Del Pilar
+
+## Descripción
+Dog App permite explorar imágenes de perros aleatorios, ver detalles y guardar tus favoritos en el navegador.
+
+## API utilizada
+- [Dog API](https://dog.ceo/dog-api/)
+
+## Cómo ejecutar
+1. Descargar el proyecto.
+2. Abrir `index.html` en tu navegador.
+3. Disfrutar de la app.
