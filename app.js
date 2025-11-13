@@ -1,10 +1,8 @@
-
-
 // URL de la API de perritos 🐾
 const API_URL = "https://api.thedogapi.com/v1/images/search?limit=12";
 
 // ===========================
-// Consejos del perrito 🐕 gitg
+// Consejos del perrito 🐕
 // ===========================
 const tipsProgramacion = [
     "Siempre usa 'let' o 'const' en lugar de 'var' en JavaScript.",
@@ -26,6 +24,28 @@ const tipsProgramacion = [
     "El DOM no es magia; entiéndelo para depurar sin sufrir.",
     "Si tu código funciona a la primera, probablemente algo salió mal.",
     "Cada vez que ves un bug, imagina que el código está jugando contigo.",
+    "Aprende y usa 'async/await' para manejar código asíncrono; es más limpio que las Promesas.",
+    "Usa 'const' por defecto y solo cambia a 'let' si sabes que la variable necesita ser reasignada.",
+    "Domina la desestructuración de objetos y arrays; simplifica mucho la extracción de datos.",
+    "Utiliza los 'template literals' (`...`) para construir cadenas largas e inyectar variables fácilmente.",
+    "Conoce bien los métodos de array: map, filter y reduce son más eficientes que un bucle for tradicional.",
+    "Aplica el principio DRY (Don't Repeat Yourself): crea funciones para bloques de código que se repiten.",
+    "Comprende el Event Loop de JS; es fundamental para entender cómo funciona la asincronía.",
+    "Practica la programación orientada a objetos (POO) usando clases en ES6+ para estructurar tu JS.",
+    "Utiliza Flexbox para alinear elementos en una dimensión (fila o columna). ¡Es más fácil que float!",
+    "Aprende CSS Grid para layouts complejos de dos dimensiones (filas y columnas a la vez).",
+    "Define variables CSS (--color-primario) para cambiar fácilmente los colores de tu tema.",
+    "Establece 'box-sizing: border-box;' en todos los elementos para controlar el tamaño de forma predecible.",
+    "Prioriza las unidades relativas como 'rem' para tipografía y 'vw'/'vh' para dimensiones de viewport.",
+    "Usa los pseudo-selectores :nth-child() o :last-child para estilizar elementos específicos sin añadir clases.",
+    "Evita usar píxeles (px) para fuentes en diseño responsivo; usa 'em' o 'rem' en su lugar.",
+    "Siempre usa HTML semántico: <article>, <section>, <nav> y <aside> dan significado a tu contenido.",
+    "Asegúrate de que tus etiquetas <label> estén asociadas a sus <input> mediante el atributo 'for'.",
+    "Valida tu HTML; usa herramientas online para revisar que no tengas etiquetas mal cerradas o errores.",
+    "El atributo 'alt' en las imágenes no es opcional: es crucial para la accesibilidad y el SEO.",
+    "Usa el atributo 'data-' para almacenar pequeñas cantidades de datos personalizados en elementos HTML.",
+    "Incluye siempre la etiqueta meta viewport para asegurar que tu diseño se adapte bien a móviles.",
+    "Practica la anidación correcta: los <div> no deben ir dentro de <span> y los <p> no deben contener <div>.",
     "Mi código no tiene errores, solo comportamientos inesperados.",
     "Ctrl+Z es la función más poderosa de la vida moderna.",
     "Estoy convencido de que mi código se depura solo mientras duermo.",
@@ -42,14 +62,13 @@ const tipsProgramacion = [
 ];
 
 
-
 function mostrarVista(vistaId) {
     const vistas = document.querySelectorAll("section");
     
     
     vistas.forEach(v => v.style.display = "none");
 
-   
+    
     const vistaActiva = document.getElementById(vistaId);
     if (vistaActiva) {
         
@@ -64,7 +83,7 @@ function mostrarVista(vistaId) {
     if (vistaId === "listado") cargarPerros(); 
     if (vistaId === "coleccion") mostrarColeccion();
 
-   
+    
     const nav = document.querySelector('.nav-links');
     const toggle = document.querySelector('.menu-toggle');
 
@@ -98,15 +117,15 @@ async function cargarPerros() {
             const imageUrl = perro.url || (perro.image && perro.image.url); 
 
             div.innerHTML = `
-                <img src="${imageUrl}" alt="Perrito adorable">
+                <img src="${imageUrl}" 
+                     alt="Perrito adorable"
+                     onerror="this.onerror=null;this.src='imagenes/perro-default.png';"
+                >
                 <div class="acciones-card">
                     <button class="btn-detalle" onclick="mostrarDetalle('${imageUrl}')">
                         Ver consejo
                     </button>
-                    <button class="btn-favorito" onclick="agregarAFavoritos('${imageUrl}', this)"> 
-                        💖 Añadir
-                    </button>
-                </div>
+                    </div>
             `;
 
             contenedor.appendChild(div);
@@ -118,17 +137,18 @@ async function cargarPerros() {
 }
 
 
-// ===========================
-// Mostrar detalle del perro
-// ===========================
 function mostrarDetalle(url) {
     const consejoAleatorio = tipsProgramacion[Math.floor(Math.random() * tipsProgramacion.length)];
     const contenedor = document.getElementById("detalle-perro");
+    
+    
+    const consejoCodificado = encodeURIComponent(consejoAleatorio); 
 
     contenedor.innerHTML = `
         <img src="${url}" class="detalle-img" alt="Perrito adorable">
         <p class="mensaje-perro">🐶 ${consejoAleatorio}</p>
-        <button class="btn-favorito" onclick="agregarAFavoritos('${url}', this)">
+        
+        <button class="btn-favorito" onclick="agregarAFavoritos('${url}', '${consejoCodificado}', this)">
             💖 Añadir a Colección
         </button>
     `;
@@ -136,14 +156,22 @@ function mostrarDetalle(url) {
     mostrarVista("detalle");
 }
 
-function agregarAFavoritos(imagen, btnElement) { 
+
+function agregarAFavoritos(imagen, consejoCodificado, btnElement) { 
+    
+    const consejo = decodeURIComponent(consejoCodificado); 
+    
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 
     if (!favoritos.some(perro => perro.image === imagen)) {
-        favoritos.push({ image: imagen });
+        
+        favoritos.push({ 
+            image: imagen,
+            consejo: consejo // <-- ¡Aquí se guarda la frase elegida!
+        });
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
         
-       
+        
         if (btnElement) {
             const originalText = btnElement.innerHTML;
             btnElement.innerHTML = "✅ ¡Añadido!";
@@ -155,7 +183,7 @@ function agregarAFavoritos(imagen, btnElement) {
             
             setTimeout(() => {
                 btnElement.innerHTML = originalText;
-              
+                
                 btnElement.removeAttribute('style'); 
             }, 1500);
         }
@@ -167,7 +195,7 @@ function agregarAFavoritos(imagen, btnElement) {
 }
 
 // ===========================
-// Mostrar colección
+// Mostrar colección (MODIFICADO para mostrar el consejo)
 // ===========================
 function mostrarColeccion() {
     const contenedor = document.getElementById("contenedor-favoritos");
@@ -183,13 +211,22 @@ function mostrarColeccion() {
     favoritos.forEach(perro => {
         const div = document.createElement("div");
         div.classList.add("card-perro");
+        
+        
+        const consejoGuardado = perro.consejo || '💡 Tip no guardado';
 
         div.innerHTML = `
             <div class="card-imagen-contenedor">
                 <img src="${perro.image}" alt="Perrito favorito">
             </div>
+            
+            <div class="consejo-coleccion">
+                <p>💡 Tip guardado:</p>
+                <p class="consejo-texto-guardado">${consejoGuardado}</p>
+            </div>
+            
             <div class="acciones-card">
-                <button class="btn-detalle" onclick="mostrarDetalle('${perro.image}')">💡 Ver consejo</button>
+                <button class="btn-detalle" onclick="mostrarDetalle('${perro.image}')">🔄 Ver otro tip</button>
                 <button class="btn-eliminar" onclick="eliminarDeColeccion('${perro.image}')">🗑️ Quitar</button>
             </div>
         `;
@@ -203,7 +240,8 @@ function mostrarColeccion() {
 // ===========================
 function eliminarDeColeccion(imagen) {
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    favoritos = favoritos.filter(perro => perro.image !== imagen);
+    
+    favoritos = favoritos.filter(perro => perro.image !== imagen); 
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
     mostrarColeccion();
 }

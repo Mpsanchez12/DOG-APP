@@ -573,3 +573,42 @@ nav button:hover {
     padding: 50px 0; 
     color: var(--color-principal); 
 }
+
+
+
+.consejo-coleccion {
+    padding: 15px 10px;
+    border-top: 2px solid var(--color-principal-claro);
+    border-bottom: 2px solid var(--color-principal-claro);
+    text-align: center; 
+    background-color: #fcfcfc;
+}
+
+.consejo-coleccion p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+
+.consejo-texto-guardado {
+    font-weight: 700;
+    font-size: 1em; 
+    color: var(--color-secundario); 
+
+    margin: 5px auto 0; 
+    display: block; 
+    max-width: 95%; 
+    
+
+    overflow: visible;
+    white-space: normal;
+    border-right: none;
+    animation: none;
+}
+
+
+.card-perro:hover .consejo-coleccion {
+    box-shadow: 0 0 10px rgba(255, 112, 67, 0.2);
+}
+
