@@ -119,10 +119,10 @@ nav button:hover {
 
 .bienvenida {
     background: var(--color-blanco);
-    padding: 40px 50px; /* REDUCIDO */
+    padding: 40px 50px; 
     border-radius: 30px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-    max-width: 650px; /* REDUCIDO */
+    max-width: 650px; 
     animation: aparecer 1.2s ease;
     border: 1px solid #ffefe8;
 }
@@ -171,8 +171,8 @@ nav button:hover {
     background: var(--color-principal);
     border: none;
     color: var(--color-blanco);
-    padding: 14px 35px; /* REDUCIDO */
-    font-size: 1.1rem; /* REDUCIDO */
+    padding: 14px 35px; 
+    font-size: 1.1rem; 
     border-radius: 15px;
     cursor: pointer;
     font-weight: 700;
@@ -610,5 +610,23 @@ nav button:hover {
 
 .card-perro:hover .consejo-coleccion {
     box-shadow: 0 0 10px rgba(255, 112, 67, 0.2);
+}
+
+
+.btn-favorito.agregado-exitoso {
+    
+    background: #4BFF67; 
+
+    box-shadow: 
+        0 0 10px rgba(75, 255, 103, 0.7), 
+        0 4px 0 #28A745; 
+   
+    transform: translateY(-4px) scale(1.05); 
+   
+    color: #004d00; 
+   
+    transition: all 0.15s ease-out; 
+
+    pointer-events: none; 
 }
 

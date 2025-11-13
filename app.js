@@ -2,7 +2,7 @@
 const API_URL = "https://api.thedogapi.com/v1/images/search?limit=12";
 
 // ===========================
-// Consejos del perrito 🐕
+// Consejos del perrito 🐕 (Tips de Programación)
 // ===========================
 const tipsProgramacion = [
     "Siempre usa 'let' o 'const' en lugar de 'var' en JavaScript.",
@@ -81,7 +81,7 @@ function mostrarVista(vistaId) {
 
     
     if (vistaId === "listado") cargarPerros(); 
-    if (vistaId === "coleccion") mostrarColeccion();
+    if (vistaId === "coleccion") mostrarColeccion(); 
 
     
     const nav = document.querySelector('.nav-links');
@@ -136,19 +136,20 @@ async function cargarPerros() {
     }
 }
 
-
+// ===========================
+// Mostrar detalle del perro
+// ===========================
 function mostrarDetalle(url) {
     const consejoAleatorio = tipsProgramacion[Math.floor(Math.random() * tipsProgramacion.length)];
     const contenedor = document.getElementById("detalle-perro");
     
-    
-    const consejoCodificado = encodeURIComponent(consejoAleatorio); 
+    const consejoEscapado = consejoAleatorio.replace(/'/g, "\\'"); 
 
     contenedor.innerHTML = `
         <img src="${url}" class="detalle-img" alt="Perrito adorable">
         <p class="mensaje-perro">🐶 ${consejoAleatorio}</p>
         
-        <button class="btn-favorito" onclick="agregarAFavoritos('${url}', '${consejoCodificado}', this)">
+        <button class="btn-favorito" onclick="agregarAFavoritos('${url}', '${consejoEscapado}', this)">
             💖 Añadir a Colección
         </button>
     `;
@@ -156,48 +157,55 @@ function mostrarDetalle(url) {
     mostrarVista("detalle");
 }
 
-
-function agregarAFavoritos(imagen, consejoCodificado, btnElement) { 
+function agregarAFavoritos(imagen, consejoEscapado, btnElement) { 
     
-    const consejo = decodeURIComponent(consejoCodificado); 
+    
+    const consejo = consejoEscapado; 
     
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 
     if (!favoritos.some(perro => perro.image === imagen)) {
         
+    
         favoritos.push({ 
             image: imagen,
-            consejo: consejo // <-- ¡Aquí se guarda la frase elegida!
+            consejo: consejo 
         });
+        
+  
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        
+
+        mostrarColeccion(); 
         
         
         if (btnElement) {
             const originalText = btnElement.innerHTML;
-            btnElement.innerHTML = "✅ ¡Añadido!";
-            btnElement.style.backgroundColor = '#4CAF50'; 
-            btnElement.style.color = 'white';
-            btnElement.style.boxShadow = '0 6px 0 #388E3C, 0 8px 15px rgba(0, 0, 0, 0.2)';
-            btnElement.style.transform = 'translateY(-2px)'; 
-
             
+            btnElement.classList.add('agregado-exitoso');
+            btnElement.innerHTML = "✅ ¡Añadido!";
+            
+            btnElement.disabled = true;
+
+        
             setTimeout(() => {
+                btnElement.classList.remove('agregado-exitoso');
                 btnElement.innerHTML = originalText;
-                
-                btnElement.removeAttribute('style'); 
+                btnElement.disabled = false;
             }, 1500);
         }
     } else {
-    
         
         alert("⚠️ Este perrito ya está en tu colección.");
     }
 }
 
+
 // ===========================
-// Mostrar colección (MODIFICADO para mostrar el consejo)
+// Mostrar colección 
 // ===========================
 function mostrarColeccion() {
+    
     const contenedor = document.getElementById("contenedor-favoritos");
     const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 
@@ -211,7 +219,6 @@ function mostrarColeccion() {
     favoritos.forEach(perro => {
         const div = document.createElement("div");
         div.classList.add("card-perro");
-        
         
         const consejoGuardado = perro.consejo || '💡 Tip no guardado';
 
@@ -241,8 +248,11 @@ function mostrarColeccion() {
 function eliminarDeColeccion(imagen) {
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
     
+    
     favoritos = favoritos.filter(perro => perro.image !== imagen); 
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
+    
+    
     mostrarColeccion();
 }
 
