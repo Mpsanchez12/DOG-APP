@@ -2,7 +2,7 @@
 :root {
     --color-principal: #FF7043; 
     --color-secundario: #4A90E2; 
-    --color-fondo: #FFF6F0; 
+    --color-fondo: #FFE5CC;
     --color-blanco: #FFFFFF;
     --color-texto: #333333;
     --sombra-suave: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -171,8 +171,8 @@ nav button:hover {
     background: var(--color-principal);
     border: none;
     color: var(--color-blanco);
-    padding: 14px 35px; 
-    font-size: 1.1rem; 
+    padding: 14px 35px; /* REDUCIDO */
+    font-size: 1.1rem; /* REDUCIDO */
     border-radius: 15px;
     cursor: pointer;
     font-weight: 700;
@@ -190,7 +190,7 @@ nav button:hover {
 }
 
 .accion button {
-    animation: pulse 2s infinite ease-in-out;
+ animation: pulse 1.5s infinite ease-in-out; /* Pulso más rápido */
 }
 
 
@@ -299,11 +299,11 @@ nav button:hover {
     background: linear-gradient(135deg, var(--color-fondo), #ffebe0); 
     padding: 30px 20px;
 }
-
 .detalle-card-container {
     background-color: var(--color-blanco);
     border-radius: 35px;
-    padding: 45px;
+    /* CAMBIO: Reducir el padding superior para que el avatar sobresalga */
+    padding: 10px 45px 45px 45px; 
     box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
     max-width: 650px; 
     width: 95%;
@@ -351,9 +351,9 @@ nav button:hover {
     animation: aparecer 0.8s ease-out; 
 }
 
+/* Botones de Detalle (diferentes colores) */
 
-
-
+/* Botón Añadir a Colección - Color Principal */
 #detalle-perro .btn-favorito { 
     max-width: 350px;
     padding: 20px 30px; 
@@ -381,6 +381,7 @@ nav button:hover {
 }
 
 
+/* Botón "Vaciar Colección" */
 #coleccion button[onclick="limpiarColeccion()"] {
     margin-top: 40px; 
     padding: 15px 35px;
@@ -402,7 +403,7 @@ nav button:hover {
 }
 
 
-
+/* ====== ANIMACIONES Y RESPONSIVE ====== */
 @keyframes floatingDog {
     0% { transform: scaleX(-1) translateY(0); }
     50% { transform: scaleX(-1) translateY(-10px); }
@@ -415,11 +416,10 @@ nav button:hover {
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 112, 67, 0.5); }
-    70% { transform: scale(1.04); box-shadow: 0 0 0 15px rgba(255, 112, 67, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 112, 67, 0); }
+ 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 112, 67, 0.5); }
+ 70% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(255, 112, 67, 0); } /* Más grande y más halo */
+100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 112, 67, 0); }
 }
-
 
 @media (max-width: 768px) {
     
