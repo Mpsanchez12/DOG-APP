@@ -190,7 +190,7 @@ nav button:hover {
 }
 
 .accion button {
- animation: pulse 1.5s infinite ease-in-out; /* Pulso más rápido */
+ animation: pulse 1.5s infinite ease-in-out; 
 }
 
 
@@ -237,7 +237,7 @@ nav button:hover {
     margin-bottom: 15px;
 }
 
-/* Acciones en la tarjeta */
+
 .acciones-card {
     display: flex;
     justify-content: space-between;
@@ -302,7 +302,6 @@ nav button:hover {
 .detalle-card-container {
     background-color: var(--color-blanco);
     border-radius: 35px;
-    /* CAMBIO: Reducir el padding superior para que el avatar sobresalga */
     padding: 10px 45px 45px 45px; 
     box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
     max-width: 650px; 
@@ -351,9 +350,6 @@ nav button:hover {
     animation: aparecer 0.8s ease-out; 
 }
 
-/* Botones de Detalle (diferentes colores) */
-
-/* Botón Añadir a Colección - Color Principal */
 #detalle-perro .btn-favorito { 
     max-width: 350px;
     padding: 20px 30px; 
@@ -381,7 +377,6 @@ nav button:hover {
 }
 
 
-/* Botón "Vaciar Colección" */
 #coleccion button[onclick="limpiarColeccion()"] {
     margin-top: 40px; 
     padding: 15px 35px;
@@ -393,7 +388,33 @@ nav button:hover {
     box-shadow: 0 4px 0 #222222, 0 6px 15px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
     font-size: 1.1rem;
+    
+    
+    position: relative; 
+    overflow: hidden; 
+    z-index: 1; 
+    
 }
+
+
+#coleccion button[onclick="limpiarColeccion()"]::before {
+    content: ''; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.25); 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem; 
+    
+    transform: translateX(-100%); 
+    transition: transform 0.4s ease-out; 
+    z-index: -1; 
+}
+
 
 #coleccion button[onclick="limpiarColeccion()"]:hover {
     background-color: #555555;
@@ -403,7 +424,15 @@ nav button:hover {
 }
 
 
-/* ====== ANIMACIONES Y RESPONSIVE ====== */
+#coleccion button[onclick="limpiarColeccion()"]:hover::before {
+    transform: translateX(0%); 
+}
+
+
+
+
+
+
 @keyframes floatingDog {
     0% { transform: scaleX(-1) translateY(0); }
     50% { transform: scaleX(-1) translateY(-10px); }
@@ -517,4 +546,30 @@ nav button:hover {
     #listado-perros, #contenedor-favoritos {
         grid-template-columns: 1fr;
     }
+}
+
+
+
+@keyframes girar {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.patita-loader {
+    display: inline-block; 
+    animation: girar 1.5s linear infinite; 
+    font-size: 1.2em; 
+}
+
+
+.cargando-texto {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 50px 0; 
+    color: var(--color-principal); 
 }

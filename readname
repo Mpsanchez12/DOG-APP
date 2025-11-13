@@ -5,8 +5,7 @@
 - Integrante 2 Sanchez Maria Del Pilar
 
 ## Descripción
-Dog App permite explorar imágenes de perros aleatorios, ver detalles y guardar tus favoritos en el navegador.
-
+Dog App es una aplicación web dinámica que permite a los usuarios explorar imágenes de perros aleatorios, ver detalles específicos y guardar sus favoritos en una colección personal almacenada localmente en el navegador.
 ## API utilizada
 - [Dog API](https://dog.ceo/dog-api/)
 

@@ -4,7 +4,7 @@
 const API_URL = "https://api.thedogapi.com/v1/images/search?limit=12";
 
 // ===========================
-// Consejos del perrito 🐕 
+// Consejos del perrito 🐕 gitg
 // ===========================
 const tipsProgramacion = [
     "Siempre usa 'let' o 'const' en lugar de 'var' en JavaScript.",
@@ -79,8 +79,12 @@ function mostrarVista(vistaId) {
 // ===========================
 async function cargarPerros() {
     const contenedor = document.getElementById("listado-perros");
-    contenedor.innerHTML = "<p>Cargando perritos... 🐾</p>";
-
+    
+    contenedor.innerHTML = `
+        <p class="cargando-texto">
+            Cargando perritos... <span class="patita-loader">🐾</span>
+        </p>
+    `;
     try {
         const respuesta = await fetch(API_URL);
         const data = await respuesta.json();
