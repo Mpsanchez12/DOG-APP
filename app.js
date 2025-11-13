@@ -1,14 +1,14 @@
-
+// ===================================
+// Dog App - Script principal (FINAL OPTIMIZADO) 🐶
+// ===================================
 
 // URL de la API de perritos 🐾
 const API_URL = "https://api.thedogapi.com/v1/images/search?limit=12";
 
 // ===========================
-// Consejos del perrito 🐕
+// Consejos del perrito 🐕 (Versión Final)
 // ===========================
-
 const consejosPerrito = [
-  
     "Mientras el mundo se estresa, hay alguien que siempre te espera impaciente para curarte de todo mal. Soy yo. ❤️",
     "No te compliques: el amor se demuestra moviendo la cola y pidiendo caricias. Funciona siempre. 🤗",
     "Tu mejor atuendo es una sonrisa, pero tu mejor complemento es mi pelo pegado a tu ropa. 🐕",
@@ -18,23 +18,22 @@ const consejosPerrito = [
     "Da la bienvenida a cada nuevo día con la misma euforia que a la hora de comer. 🥳",
     "Si algo huele mal, ¡rómpelo! (No, espera, eso solo lo hago yo. Tú ignora ese consejo). 💩",
     "No existe problema tan grande que no se pueda solucionar con un buen mordisco a tu zapato. (¡Oops!). 🤫",
-    "Si tienes dudas, siempre ladra. Siempre." 
+    "Si tienes dudas, siempre ladra. Siempre. 🗣️" 
 ];
 
-
-
+// ==================================================
+// Mostrar una vista y ocultar las demás (FUNCIÓN PRINCIPAL)
+// ==================================================
 function mostrarVista(vistaId) {
     const vistas = document.querySelectorAll("section");
     
-    
-    
+    // 1. Ocultar todas las secciones
     vistas.forEach(v => v.style.display = "none");
 
-  
+    // 2. Mostrar la sección activa con el display correcto
     const vistaActiva = document.getElementById(vistaId);
     if (vistaActiva) {
-        // CORRECCIÓN CLAVE: Usamos 'flex' para las vistas que necesitan centrarse (inicio y detalle).
-        // Si no es 'inicio' o 'detalle', usamos 'block' (que funciona para listado y coleccion).
+        // Usa 'flex' para las vistas que necesitan centrado (inicio y detalle)
         if (vistaId === 'inicio' || vistaId === 'detalle') {
             vistaActiva.style.display = "flex";
         } else {
@@ -73,7 +72,6 @@ async function cargarPerros() {
             const div = document.createElement("div");
             div.classList.add("card-perro");
 
-            // Usamos perro.url como identificador de la imagen
             const imageUrl = perro.url || (perro.image && perro.image.url); 
 
             div.innerHTML = `
@@ -82,7 +80,7 @@ async function cargarPerros() {
                     <button class="btn-detalle" onclick="mostrarDetalle('${imageUrl}')">
                         Ver consejo
                     </button>
-                    <button class="btn-favorito" onclick="agregarAFavoritos('${imageUrl}')">
+                    <button class="btn-favorito" onclick="agregarAFavoritos('${imageUrl}', this)"> 
                         💖 Añadir
                     </button>
                 </div>
@@ -107,7 +105,7 @@ function mostrarDetalle(url) {
     contenedor.innerHTML = `
         <img src="${url}" class="detalle-img" alt="Perrito adorable">
         <p class="mensaje-perro">🐶 ${consejoAleatorio}</p>
-        <button class="btn-favorito" onclick="agregarAFavoritos('${url}')">
+        <button class="btn-favorito" onclick="agregarAFavoritos('${url}', this)">
             💖 Añadir a Colección
         </button>
     `;
@@ -116,16 +114,34 @@ function mostrarDetalle(url) {
 }
 
 // ===========================
-// Guardar en colección
+// Guardar en colección (MEJORADO con Feedback Visual)
 // ===========================
-function agregarAFavoritos(imagen) {
+function agregarAFavoritos(imagen, btnElement) { 
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 
     if (!favoritos.some(perro => perro.image === imagen)) {
         favoritos.push({ image: imagen });
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
-        alert("🐾 ¡Perrito añadido a tu colección!");
+        
+        // **DINAMISMO:** Feedback visual en el botón
+        if (btnElement) {
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = "✅ ¡Añadido!";
+            btnElement.style.backgroundColor = '#4CAF50'; 
+            btnElement.style.color = 'white';
+            btnElement.style.boxShadow = '0 6px 0 #388E3C, 0 8px 15px rgba(0, 0, 0, 0.2)';
+            btnElement.style.transform = 'translateY(-2px)'; // Pequeño movimiento de confirmación
+
+            // Revertir el estado visual después de 1.5 segundos
+            setTimeout(() => {
+                btnElement.innerHTML = originalText;
+                // Eliminar los estilos inyectados para que el CSS tome el control nuevamente
+                btnElement.removeAttribute('style'); 
+            }, 1500);
+        }
     } else {
+        // **MEJORA:** Usamos un pequeño feedback en la consola o un alert, si no se quiere feedback en el DOM.
+        // Mantenemos el alert por simplicidad, pero se recomienda un modal o toast para mejor estética.
         alert("⚠️ Este perrito ya está en tu colección.");
     }
 }
@@ -209,4 +225,3 @@ function mostrarListado() {
 document.addEventListener("DOMContentLoaded", () => {
     mostrarVista("inicio"); 
 });
-
