@@ -1,25 +1,59 @@
-// ===========================
-// Dog App - Script principal 🐶
-// ===========================
+
 
 // URL de la API de perritos 🐾
 const API_URL = "https://api.thedogapi.com/v1/images/search?limit=12";
 
 // ===========================
-// Mostrar una vista y ocultar las demás
+// Consejos del perrito 🐕
 // ===========================
+
+const consejosPerrito = [
+  
+    "Mientras el mundo se estresa, hay alguien que siempre te espera impaciente para curarte de todo mal. Soy yo. ❤️",
+    "No te compliques: el amor se demuestra moviendo la cola y pidiendo caricias. Funciona siempre. 🤗",
+    "Tu mejor atuendo es una sonrisa, pero tu mejor complemento es mi pelo pegado a tu ropa. 🐕",
+    "La felicidad se puede medir en la cantidad de veces que se agita una cola. Sé feliz. ✨",
+    "No te preocupes por el futuro. Concéntrate en la pelota que tienes ahora. 🎾",
+    "Recuerda que tu única posesión real es el tiempo que pasas con los que amas. 🏡",
+    "Da la bienvenida a cada nuevo día con la misma euforia que a la hora de comer. 🥳",
+    "Si algo huele mal, ¡rómpelo! (No, espera, eso solo lo hago yo. Tú ignora ese consejo). 💩",
+    "No existe problema tan grande que no se pueda solucionar con un buen mordisco a tu zapato. (¡Oops!). 🤫",
+    "Si tienes dudas, siempre ladra. Siempre." 
+];
+
+
+
 function mostrarVista(vistaId) {
     const vistas = document.querySelectorAll("section");
+    
+    
+    
     vistas.forEach(v => v.style.display = "none");
 
+  
     const vistaActiva = document.getElementById(vistaId);
-    if (vistaActiva) vistaActiva.style.display = "block";
+    if (vistaActiva) {
+        // CORRECCIÓN CLAVE: Usamos 'flex' para las vistas que necesitan centrarse (inicio y detalle).
+        // Si no es 'inicio' o 'detalle', usamos 'block' (que funciona para listado y coleccion).
+        if (vistaId === 'inicio' || vistaId === 'detalle') {
+            vistaActiva.style.display = "flex";
+        } else {
+            vistaActiva.style.display = "block";
+        }
+    }
 
-    // Si se entra en el listado, cargar los perros.
+    // 3. Cargar datos si es necesario
     if (vistaId === "listado") cargarPerros(); 
-
-    // Si se entra en la vista de colección, cargarla.
     if (vistaId === "coleccion") mostrarColeccion();
+
+    // 4. Cierra el menú hamburguesa si está abierto (Lógica RESPONSIVE)
+    const nav = document.querySelector('.nav-links');
+    const toggle = document.querySelector('.menu-toggle');
+
+    if (nav && toggle && nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        toggle.classList.remove('active');
+    }
 }
 
 // ===========================
@@ -33,19 +67,22 @@ async function cargarPerros() {
         const respuesta = await fetch(API_URL);
         const data = await respuesta.json();
 
-        contenedor.innerHTML = ""; // limpiar
+        contenedor.innerHTML = ""; 
 
         data.forEach(perro => {
             const div = document.createElement("div");
             div.classList.add("card-perro");
 
+            // Usamos perro.url como identificador de la imagen
+            const imageUrl = perro.url || (perro.image && perro.image.url); 
+
             div.innerHTML = `
-                <img src="${perro.url}" alt="Perrito adorable">
+                <img src="${imageUrl}" alt="Perrito adorable">
                 <div class="acciones-card">
-                    <button class="btn-detalle" onclick="mostrarDetalle('${perro.url}')">
-                         Ver consejo
+                    <button class="btn-detalle" onclick="mostrarDetalle('${imageUrl}')">
+                        Ver consejo
                     </button>
-                    <button class="btn-favorito" onclick="agregarAFavoritos('${perro.url}')">
+                    <button class="btn-favorito" onclick="agregarAFavoritos('${imageUrl}')">
                         💖 Añadir
                     </button>
                 </div>
@@ -59,21 +96,6 @@ async function cargarPerros() {
     }
 }
 
-// ===========================
-// Consejos del perrito 🐕
-// ===========================
-const consejosPerrito = [
-    "No olvides darme mimos 🐾",
-    "Recuerda hidratarte, humano 💧",
-    "Adoptar es un acto de amor ❤️",
-    "Una siesta al día mantiene el mal humor lejos 😴",
-    "Pasea 30 minutos al sol ☀️",
-    "¡Sonríe! Te ves mejor así 😁",
-    "Dame una galletita, me la merezco 🍪",
-    "No trabajes tanto, juega un poco 🎾",
-    "Si estás triste, yo te presto mi cola para moverla juntos 🐕",
-    "Cada día es mejor con una sonrisa y un paseo 🦮"
-];
 
 // ===========================
 // Mostrar detalle del perro
@@ -109,7 +131,7 @@ function agregarAFavoritos(imagen) {
 }
 
 // ===========================
-// Mostrar colección (Estructura Corregida)
+// Mostrar colección
 // ===========================
 function mostrarColeccion() {
     const contenedor = document.getElementById("contenedor-favoritos");
@@ -154,17 +176,37 @@ function eliminarDeColeccion(imagen) {
 // Vaciar toda la colección
 // ===========================
 function limpiarColeccion() {
-    localStorage.removeItem("favoritos");
-    mostrarColeccion();
+    if (confirm("¿Estás seguro de que quieres vaciar toda tu colección de perritos?")) {
+        localStorage.removeItem("favoritos");
+        mostrarColeccion();
+    }
+}
+
+// ====================================
+// Función del Menú Hamburguesa
+// ====================================
+function toggleMenu() {
+    const nav = document.querySelector('.nav-links');
+    const toggle = document.querySelector('.menu-toggle');
+    
+    // Alterna la clase 'active' para mostrar/ocultar el menú y transformar el icono
+    if (nav && toggle) {
+        nav.classList.toggle('active');
+        toggle.classList.toggle('active'); 
+    }
 }
 
 // ===========================
-// Inicialización
+// Inicialización y Utilidades
 // ===========================
+
+// Función auxiliar para el botón "Ver perros" en la vista de inicio
 function mostrarListado() {
     mostrarVista("listado");
 }
 
+// Inicia la aplicación en la vista de inicio
 document.addEventListener("DOMContentLoaded", () => {
-    mostrarVista("inicio"); // Vista inicial
+    mostrarVista("inicio"); 
 });
+

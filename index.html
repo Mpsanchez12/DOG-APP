@@ -7,14 +7,26 @@
   <link rel="stylesheet" href="estilos.css" />
 </head>
 <body>
+
   <header>
-    <h1>🐾 Dog App 🐾</h1>
-    <nav>
-      <button onclick="mostrarVista('inicio')">Inicio</button>
-      <button onclick="mostrarVista('listado')">Listado</button>
-      <button onclick="mostrarVista('coleccion'); mostrarColeccion();">Mi Colección</button>
+    <div class="logo-container">
+        <img src="imagenes/dog.gif" alt="Logo Dog App" class="logo">
+        <h1>Dog App</h1> 
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()"> 
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <nav class="nav-links">
+        <button id="nav-inicio" onclick="mostrarVista('inicio')">Inicio</button>
+        <button id="nav-listado" onclick="mostrarVista('listado')">Listado</button>
+        <button id="nav-coleccion" onclick="mostrarVista('coleccion')">Mi Colección</button>
     </nav>
-  </header>
+</header>
+  
 
   <!-- ========== INICIO ========== -->
   <section id="inicio">
@@ -27,12 +39,13 @@
           </p>
         </div>
 
-        <div class="accion">
-          <img class="gif-perrito"
-            src="https://i.pinimg.com/originals/d2/99/40/d2994005233783287041f6b90980546b.gif"
-            alt="Perrito animado" />
-          <button onclick="mostrarListado()">Ver perros</button>
-        </div>
+    <div class="accion">
+ <button onclick="mostrarListado()">Ver perros</button>
+    
+ <img class="gif-perrito"
+ src="imagenes/perritojugando.gif"
+ alt="Perrito animado" />
+</div>
       </div>
     </div>
   </section>
@@ -45,12 +58,18 @@
 
   <!-- ========== DETALLE ========== -->
   <section id="detalle" style="display:none;">
-    <div class="texto-con-fondo">
-      <h2>💖 Detalle del perrito 💖</h2>
-      <div id="detalle-perro"></div>
-    </div>
-    <button onclick="mostrarVista('listado')">⬅️ Volver al listado</button>
-  </section>
+<div class="detalle-card-container"> <h2>💖 Detalle del perrito 💖</h2> 
+<div class="detalle-contenido-principal"> <div id="detalle-perro" class="detalle-perro-contenido">
+ </div>
+ </div>
+
+<div class="detalle-acciones-inferiores"> 
+                <button id="btn-volver-detalle" class="btn-volver-listado" onclick="mostrarVista('listado')"> 
+⬅️ Volver al listado
+</button>
+ </div>
+</div>
+</section>
 
   <!-- ========== COLECCIÓN ========== -->
   <section id="coleccion" style="display:none;">
