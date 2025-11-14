@@ -43,7 +43,7 @@ git clone https://github.com/Mpsanchez12/DOG-APP
 
 Acceder al directorio:
 
-cd miprovectojava 
+cd miproyectojava 
 
 Abrir la aplicación:
 Abre el archivo index.html en tu navegador web.
